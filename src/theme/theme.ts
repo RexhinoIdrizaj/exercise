@@ -1,14 +1,28 @@
 import { createTheme } from "@mui/material/styles";
 
+const colors = {
+  primary: "#556cd6",
+  secondary: "#19857b",
+  textPrimary: "black",
+  textSecondary: "white",
+};
+
 // A custom theme for this app
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#556cd6",
+      main: colors.primary,
     },
     secondary: {
-      main: "#19857b",
+      main: colors.secondary,
     },
+    text: {
+      primary: colors.textPrimary,
+      secondary: colors.textSecondary,
+    },
+  },
+  typography: {
+    fontFamily: "Roboto, sans-serif",
   },
 });
 
