@@ -1,6 +1,7 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
-import { AcademiesList, DevicesList } from "../components";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Box, Container, Grid, Typography } from "@mui/material";
+
+import { AcademiesList, DevicesList } from "../components";
 import { getAcademiesLogs } from "../services";
 import { transformDataLogs } from "../transformers";
 import { TModifiedAcademiesData, TNullable } from "../models";

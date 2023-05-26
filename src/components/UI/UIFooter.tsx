@@ -1,7 +1,8 @@
+import { FC } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-const UIFooter = () => {
+const UIFooter: FC = () => {
   return (
     <Box
       sx={{ backgroundColor: "primary.main" }}

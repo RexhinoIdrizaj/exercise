@@ -10,12 +10,9 @@ import { TWantedDeviceData } from "../models";
 
 interface TDevicesListProps {
   data: TWantedDeviceData[];
-  onItemClick?: (academyId: number) => void;
 }
 
-const DevicesList: FC<TDevicesListProps> = ({ data, onItemClick }) => {
-  console.log("🚀 ~ file: DevicesList.tsx:17 ~ data:", data);
-
+const DevicesList: FC<TDevicesListProps> = ({ data }) => {
   const getRightText = useMemo(() => {
     return (percentPerDay: number) => (percentPerDay === 0 ? "unknown" : "");
   }, []);

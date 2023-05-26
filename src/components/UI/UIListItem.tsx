@@ -3,17 +3,17 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
-
 import Box from "@mui/material/Box";
+
 import { TNullable } from "../../models";
 
 interface TUIListItemProps {
   mainText: string | number;
-  onClick?: () => void;
   selected?: boolean;
   rightText?: string | number;
   leftIcon?: JSX.Element;
   rightIcon?: TNullable<JSX.Element>;
+  onClick?: () => void;
 }
 
 const UIListItem: FC<TUIListItemProps> = ({
