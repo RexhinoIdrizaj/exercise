@@ -6,7 +6,7 @@ import {
   TSingleAcademyData,
   TWantedDeviceData,
 } from "../models";
-import { calcTimeDiffInHours } from "../utils";
+import { CONSTANTS, calcTimeDiffInHours } from "../utils";
 
 const getDeviceStatistics = (
   deviceLogs: TDeviceLog[],
@@ -36,7 +36,7 @@ const getDeviceStatistics = (
       : totalTimeInHours;
   const percentPerDay = usagePerDay * 100;
   const roundedPercentPerDay = Math.round(usagePerDay * 100);
-  const hasIssue = percentPerDay > 30;
+  const hasIssue = percentPerDay > CONSTANTS.batteryThreshold;
 
   return {
     serialNumber,
@@ -46,28 +46,25 @@ const getDeviceStatistics = (
   };
 };
 
+const groupeDevicesPerAcademy = (data: TDeviceLog[]): TGroupedData =>
+  data.reduce((academies: TGroupedData, log) => {
+    const { serialNumber, academyId } = log;
+    const strAcademyId = academyId.toString();
+    academies = {
+      ...academies,
+      [strAcademyId]: {
+        ...academies[academyId],
+
+        [serialNumber]: [...(academies[academyId]?.[serialNumber] || []), log],
+      },
+    };
+    return academies;
+  }, {});
+
 export const transformDataLogs = (
   data: TDeviceLog[]
 ): TModifiedAcademiesData => {
-  const academyData: TGroupedData = data.reduce(
-    (academies: TGroupedData, log) => {
-      const { serialNumber, academyId } = log;
-      const strAcademyId = academyId.toString();
-      academies = {
-        ...academies,
-        [strAcademyId]: {
-          ...academies[academyId],
-
-          [serialNumber]: [
-            ...(academies[academyId]?.[serialNumber] || []),
-            log,
-          ],
-        },
-      };
-      return academies;
-    },
-    {}
-  );
+  const academyData = groupeDevicesPerAcademy(data);
 
   const wantedAcademyData: TModifiedAcademiesData = {};
 
@@ -90,60 +87,5 @@ export const transformDataLogs = (
       { devices: [], batteryIssues: 0, id: academyId }
     );
   }
-
-  console.log(
-    "🚀 ~ file: transformerLogs.ts:57 ~ wantedAcademyData:",
-    wantedAcademyData
-  );
-
   return wantedAcademyData;
-  // const wantedResult: TModifiedAcademiesData = {};
-
-  // data.forEach((item) => {
-  //   const { academyId, batteryLevel, serialNumber, timestamp } = item;
-  // const academyData = wantedResult[academyId] || {
-  //   batteryIssues: 0,
-  //   id: academyId,
-  //   devices: {},
-  // };
-  //   const device = academyData.devices[serialNumber] || {
-  //     entries: [],
-  //     serialNumber,
-  //     previousEntry: null,
-  //     issue: false,
-  //     avgPerctDay: 0,
-  //     track: { dischargedLevel: 0, minutes: 0, isCharged: false },
-  //   };
-  //   device.entries.push(item);
-  //   if (device.track.isCharged) return;
-  //   if (device.previousEntry) {
-  //     const {
-  //       batteryLevel: previousBatteryLevel,
-  //       timestamp: previousTimestamp,
-  //     } = device.previousEntry;
-
-  //     const batteryLevelDiff = batteryLevel - previousBatteryLevel;
-  //     const timestampDiff = calculateTimestampDiffInMinutes(
-  //       timestamp,
-  //       previousTimestamp
-  //     );
-
-  //     if (batteryLevelDiff > 0) {
-  //       device.track.isCharged = true;
-  //       return;
-  //     }
-
-  //     const newDischLevel =
-  //       device.track.dischargedLevel + Math.abs(batteryLevelDiff);
-  //     device.track.dischargedLevel = parseFloat(newDischLevel.toFixed(2));
-  //     device.track.minutes += Math.round(timestampDiff);
-  //   }
-
-  //   device.previousEntry = item;
-  //   academyData.devices[serialNumber] = device;
-  //   wantedResult[academyId] = academyData;
-  //   return wantedResult;
-  // });
-  // console.log("🚀 ~ file: transformerLogs.ts:8 ~ wantedResult:", wantedResult);
-  // return wantedResult;
 };

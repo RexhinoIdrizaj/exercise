@@ -1,6 +1,10 @@
 import { FC } from "react";
 import List from "@mui/material/List";
-import { ReportProblemTwoTone, SchoolTwoTone } from "@mui/icons-material";
+import {
+  WarningTwoTone,
+  ThumbUpAltTwoTone,
+  SchoolTwoTone,
+} from "@mui/icons-material";
 
 import { UIListItem } from "./UI";
 import { TSingleAcademyData } from "../models";
@@ -20,7 +24,13 @@ const AcademiesList: FC<TAcademiesListProps> = ({ data, onItemClick }) => {
             mainText={value.id}
             rightText={value.batteryIssues}
             leftIcon={<SchoolTwoTone />}
-            rightIcon={<ReportProblemTwoTone color="error" />}
+            rightIcon={
+              value.batteryIssues > 0 ? (
+                <WarningTwoTone color="error" />
+              ) : (
+                <ThumbUpAltTwoTone color="success" />
+              )
+            }
             onClick={() => onItemClick(value.id)}
           />
         );

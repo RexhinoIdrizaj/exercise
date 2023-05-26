@@ -5,13 +5,14 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 
 import Box from "@mui/material/Box";
+import { TNullable } from "../../models";
 
 interface TUIListItemProps {
   mainText: string | number;
   onClick?: () => void;
   rightText?: string | number;
   leftIcon?: JSX.Element;
-  rightIcon?: JSX.Element;
+  rightIcon?: TNullable<JSX.Element>;
 }
 
 const UIListItem: FC<TUIListItemProps> = ({
@@ -29,9 +30,11 @@ const UIListItem: FC<TUIListItemProps> = ({
         )}
         <ListItemText primary={mainText} />
         <Box display="flex" alignItems="center">
-          {rightText && <ListItemText id={"issues"} primary={rightText} />}
+          {rightText && <ListItemText primary={rightText} />}
           {rightIcon && (
-            <ListItemIcon sx={{ minWidth: 25 }}>{rightIcon}</ListItemIcon>
+            <ListItemIcon sx={{ marginLeft: 1, marginBottom: 0.5 }}>
+              {rightIcon}
+            </ListItemIcon>
           )}
         </Box>
       </ListItemButton>

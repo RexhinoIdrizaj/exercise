@@ -1,7 +1,6 @@
 import { TDeviceLog } from "./modelServices";
 
 export type TNullable<T> = T | null;
-
 export interface TSignature<T> {
   [key: string]: T;
 }

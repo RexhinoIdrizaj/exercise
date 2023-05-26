@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import List from "@mui/material/List";
 import {
   PermDeviceInformationTwoTone,
@@ -16,6 +16,17 @@ interface TDevicesListProps {
 const DevicesList: FC<TDevicesListProps> = ({ data, onItemClick }) => {
   console.log("🚀 ~ file: DevicesList.tsx:17 ~ data:", data);
 
+  const getRightText = useMemo(() => {
+    return (percentPerDay: number) => (percentPerDay === 0 ? "unknown" : "");
+  }, []);
+
+  const getRightIcon = useMemo(() => {
+    return (percentPerDay: number, hasIssue: boolean) =>
+      percentPerDay > 0 ? (
+        <Battery60TwoTone color={hasIssue ? "error" : "success"} />
+      ) : null;
+  }, []);
+
   return (
     <List sx={{ maxHeight: "70vh", overflowY: "scroll" }}>
       {data.map((value) => {
@@ -23,12 +34,9 @@ const DevicesList: FC<TDevicesListProps> = ({ data, onItemClick }) => {
           <UIListItem
             key={value.serialNumber}
             mainText={value.serialNumber}
-            rightText={value.percentPerDay}
+            rightText={getRightText(value.percentPerDay)}
             leftIcon={<PermDeviceInformationTwoTone />}
-            rightIcon={
-              <Battery60TwoTone color={value.hasIssue ? "error" : "success"} />
-            }
-            // onClick={() => onItemClick(value.id)}
+            rightIcon={getRightIcon(value.percentPerDay, value.hasIssue)}
           />
         );
       })}
