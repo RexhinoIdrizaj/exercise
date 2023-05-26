@@ -7,7 +7,6 @@ const colors = {
   textSecondary: "white",
 };
 
-// A custom theme for this app
 const theme = createTheme({
   palette: {
     primary: {
@@ -24,6 +23,33 @@ const theme = createTheme({
   typography: {
     fontFamily: "Roboto, sans-serif",
   },
+  shadows: [
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+  ],
 });
 
 export default theme;
