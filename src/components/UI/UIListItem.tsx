@@ -7,21 +7,32 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Box from "@mui/material/Box";
 
 interface TUIListItemProps {
+  mainText: string | number;
+  onClick?: () => void;
+  rightText?: string | number;
   leftIcon?: JSX.Element;
   rightIcon?: JSX.Element;
 }
 
-const UIListItem: FC<TUIListItemProps> = ({ leftIcon, rightIcon }) => {
+const UIListItem: FC<TUIListItemProps> = ({
+  leftIcon,
+  mainText,
+  rightText,
+  rightIcon,
+  onClick,
+}) => {
   return (
     <ListItem>
-      <ListItemButton>
-        {leftIcon && <ListItemIcon>{leftIcon}</ListItemIcon>}
-        <ListItemText primary={`30002`} />
+      <ListItemButton onClick={onClick}>
+        {leftIcon && (
+          <ListItemIcon sx={{ minWidth: 35 }}>{leftIcon}</ListItemIcon>
+        )}
+        <ListItemText primary={mainText} />
         <Box display="flex" alignItems="center">
+          {rightText && <ListItemText id={"issues"} primary={rightText} />}
           {rightIcon && (
             <ListItemIcon sx={{ minWidth: 25 }}>{rightIcon}</ListItemIcon>
           )}
-          <ListItemText id={"issues"} primary={`5`} />
         </Box>
       </ListItemButton>
     </ListItem>

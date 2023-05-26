@@ -1,9 +1,13 @@
-export const calculateTimestampDiffInMinutes = (
+export const calcTimeDiffInHours = (
   currentTimestamp: string,
   previousTimestamp: string
 ) => {
   const diffInMilliseconds =
     new Date(currentTimestamp).getTime() -
     new Date(previousTimestamp).getTime();
-  return Math.abs(diffInMilliseconds / 60000);
+  return diffInMilliseconds / 3600000;
+};
+
+export const roundFloatValues = (value: number) => {
+  return parseInt(value.toFixed(2));
 };

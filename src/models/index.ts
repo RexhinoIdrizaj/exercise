@@ -1,2 +1,2 @@
-export * from "./modelDevice";
+export * from "./modelServices";
 export * from "./modelAppData";
