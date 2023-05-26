@@ -9,7 +9,8 @@ const ScreenMain = () => {
   const [academies, setAcademies] =
     useState<TNullable<TModifiedAcademiesData>>(null);
 
-  const [chosenAcademyId, setChosenAcademyId] = useState<TNullable<string>>();
+  const [chosenAcademyId, setChosenAcademyId] =
+    useState<TNullable<string>>(null);
 
   useEffect(() => {
     const getData = async () => {
@@ -52,6 +53,7 @@ const ScreenMain = () => {
               </Typography>
               <Box>
                 <AcademiesList
+                  selectedId={chosenAcademyId}
                   data={academiesToShow}
                   onItemClick={handleItemClick}
                 />

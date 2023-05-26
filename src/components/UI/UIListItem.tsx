@@ -10,12 +10,14 @@ import { TNullable } from "../../models";
 interface TUIListItemProps {
   mainText: string | number;
   onClick?: () => void;
+  selected?: boolean;
   rightText?: string | number;
   leftIcon?: JSX.Element;
   rightIcon?: TNullable<JSX.Element>;
 }
 
 const UIListItem: FC<TUIListItemProps> = ({
+  selected,
   leftIcon,
   mainText,
   rightText,
@@ -24,7 +26,7 @@ const UIListItem: FC<TUIListItemProps> = ({
 }) => {
   return (
     <ListItem>
-      <ListItemButton onClick={onClick}>
+      <ListItemButton selected={selected} onClick={onClick}>
         {leftIcon && (
           <ListItemIcon sx={{ minWidth: 35 }}>{leftIcon}</ListItemIcon>
         )}

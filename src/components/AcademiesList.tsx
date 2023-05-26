@@ -7,20 +7,26 @@ import {
 } from "@mui/icons-material";
 
 import { UIListItem } from "./UI";
-import { TSingleAcademyData } from "../models";
+import { TNullable, TSingleAcademyData } from "../models";
 
 interface TAcademiesListProps {
+  selectedId: TNullable<string>;
   data: TSingleAcademyData[];
   onItemClick: (academyId: string) => void;
 }
 
-const AcademiesList: FC<TAcademiesListProps> = ({ data, onItemClick }) => {
+const AcademiesList: FC<TAcademiesListProps> = ({
+  data,
+  selectedId,
+  onItemClick,
+}) => {
   return (
     <List sx={{ maxHeight: "70vh", overflowY: "scroll" }}>
       {data.map((value) => {
         return (
           <UIListItem
             key={value.id}
+            selected={selectedId === value.id}
             mainText={value.id}
             rightText={value.batteryIssues}
             leftIcon={<SchoolTwoTone />}
