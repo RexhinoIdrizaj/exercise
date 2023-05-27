@@ -46,7 +46,7 @@ export const getDeviceStatistics = (
   };
 };
 
-export const groupeDevicesPerAcademy = (data: TDeviceLog[]): TGroupedData =>
+export const groupDevicesPerAcademy = (data: TDeviceLog[]): TGroupedData =>
   data.reduce((academies: TGroupedData, log) => {
     const { serialNumber, academyId } = log;
     const strAcademyId = academyId.toString();
@@ -64,7 +64,7 @@ export const groupeDevicesPerAcademy = (data: TDeviceLog[]): TGroupedData =>
 export const transformDataLogs = (
   data: TDeviceLog[]
 ): TModifiedAcademiesData => {
-  const academyData = groupeDevicesPerAcademy(data);
+  const academyData = groupDevicesPerAcademy(data);
 
   const wantedAcademyData: TModifiedAcademiesData = {};
 

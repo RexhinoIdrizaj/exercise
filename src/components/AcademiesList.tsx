@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import List from "@mui/material/List";
 import {
   WarningTwoTone,
@@ -20,6 +20,14 @@ const AcademiesList: FC<TAcademiesListProps> = ({
   selectedId,
   onItemClick,
 }) => {
+  const getRightIcon = useMemo(() => {
+    return (batteryIssues: number) =>
+      batteryIssues > 0 ? (
+        <WarningTwoTone color="error" />
+      ) : (
+        <ThumbUpAltTwoTone color="success" />
+      );
+  }, []);
   return (
     <List sx={{ maxHeight: "70vh", overflowY: "scroll" }}>
       {data.map((value) => {
@@ -31,13 +39,7 @@ const AcademiesList: FC<TAcademiesListProps> = ({
             mainText={value.id}
             rightText={value.batteryIssues}
             leftIcon={<SchoolTwoTone />}
-            rightIcon={
-              value.batteryIssues > 0 ? (
-                <WarningTwoTone color="error" />
-              ) : (
-                <ThumbUpAltTwoTone color="success" />
-              )
-            }
+            rightIcon={getRightIcon(value.batteryIssues)}
             onClick={() => onItemClick(value.id)}
           />
         );
