@@ -9,6 +9,7 @@ import { TNullable } from "../../models";
 
 interface TUIListItemProps {
   mainText: string | number;
+  dataTestId?: string;
   selected?: boolean;
   rightText?: string | number;
   leftIcon?: JSX.Element;
@@ -22,19 +23,36 @@ const UIListItem: FC<TUIListItemProps> = ({
   mainText,
   rightText,
   rightIcon,
+  dataTestId,
   onClick,
 }) => {
   return (
-    <ListItem>
+    <ListItem data-testid={`${dataTestId}-list-item`}>
       <ListItemButton selected={selected} onClick={onClick}>
         {leftIcon && (
-          <ListItemIcon sx={{ minWidth: 35 }}>{leftIcon}</ListItemIcon>
+          <ListItemIcon
+            data-testid={`${dataTestId}-left-icon`}
+            sx={{ minWidth: 35 }}
+          >
+            {leftIcon}
+          </ListItemIcon>
         )}
-        <ListItemText primary={mainText} />
+        <ListItemText
+          data-testid={`${dataTestId}-left-text`}
+          primary={mainText}
+        />
         <Box display="flex" alignItems="center">
-          {rightText && <ListItemText primary={rightText} />}
+          {rightText && (
+            <ListItemText
+              data-testid={`${dataTestId}-right-text`}
+              primary={rightText}
+            />
+          )}
           {rightIcon && (
-            <ListItemIcon sx={{ marginLeft: 1, marginBottom: 0.5 }}>
+            <ListItemIcon
+              data-testid={`${dataTestId}-right-icon`}
+              sx={{ marginLeft: 1, marginBottom: 0.5 }}
+            >
               {rightIcon}
             </ListItemIcon>
           )}

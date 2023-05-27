@@ -8,10 +8,6 @@ export const calcTimeDiffInHours = (
   return diffInMilliseconds / 3600000;
 };
 
-export const roundFloatValues = (value: number) => {
-  return parseInt(value.toFixed(2));
-};
-
 export const CONSTANTS = {
   batteryThreshold: 30,
 };

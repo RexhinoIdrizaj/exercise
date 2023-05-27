@@ -30,6 +30,7 @@ const DevicesList: FC<TDevicesListProps> = ({ data }) => {
         return (
           <UIListItem
             key={value.serialNumber}
+            dataTestId="device"
             mainText={value.serialNumber}
             rightText={getRightText(value.percentPerDay)}
             leftIcon={<PermDeviceInformationTwoTone />}

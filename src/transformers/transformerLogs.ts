@@ -8,7 +8,7 @@ import {
 } from "../models";
 import { CONSTANTS, calcTimeDiffInHours } from "../utils";
 
-const getDeviceStatistics = (
+export const getDeviceStatistics = (
   deviceLogs: TDeviceLog[],
   serialNumber: string
 ): TWantedDeviceData => {
@@ -46,7 +46,7 @@ const getDeviceStatistics = (
   };
 };
 
-const groupeDevicesPerAcademy = (data: TDeviceLog[]): TGroupedData =>
+export const groupeDevicesPerAcademy = (data: TDeviceLog[]): TGroupedData =>
   data.reduce((academies: TGroupedData, log) => {
     const { serialNumber, academyId } = log;
     const strAcademyId = academyId.toString();

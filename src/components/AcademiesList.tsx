@@ -26,6 +26,7 @@ const AcademiesList: FC<TAcademiesListProps> = ({
         return (
           <UIListItem
             key={value.id}
+            dataTestId="academy"
             selected={selectedId === value.id}
             mainText={value.id}
             rightText={value.batteryIssues}
