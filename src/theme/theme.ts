@@ -7,6 +7,9 @@ const colors = {
   textSecondary: "white",
 };
 
+/*
+ *  Override default MUI theme for palette, components and more.
+ */
 const theme = createTheme({
   palette: {
     primary: {

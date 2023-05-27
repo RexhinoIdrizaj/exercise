@@ -8,6 +8,9 @@ import {
 } from "../models";
 import { CONSTANTS, calcTimeDiffInHours } from "../utils";
 
+/*
+ *  Calculate battery usage and check if has issue or not
+ */
 export const getDeviceStatistics = (
   deviceLogs: TDeviceLog[],
   serialNumber: string
@@ -46,6 +49,10 @@ export const getDeviceStatistics = (
   };
 };
 
+/*
+ *  Accept array of logs and group by device, and devices by academy
+ */
+
 export const groupDevicesPerAcademy = (data: TDeviceLog[]): TGroupedData =>
   data.reduce((academies: TGroupedData, log) => {
     const { serialNumber, academyId } = log;
@@ -61,6 +68,9 @@ export const groupDevicesPerAcademy = (data: TDeviceLog[]): TGroupedData =>
     return academies;
   }, {});
 
+/*
+ *  Transform grouped data to identify academies with battery issues
+ */
 export const transformDataLogs = (
   data: TDeviceLog[]
 ): TModifiedAcademiesData => {

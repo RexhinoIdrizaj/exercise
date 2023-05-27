@@ -1,3 +1,6 @@
+/*
+ *  Get the difference in hours between two timestamps.
+ */
 export const calcTimeDiffInHours = (
   currentTimestamp: string,
   previousTimestamp: string

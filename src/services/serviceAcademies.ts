@@ -1,6 +1,10 @@
 import { TGetAcademiesLogsResponse } from "../models";
 import axiosMethods from "./serviceConfig";
 
+/*
+ *  Api to retrieve all logs
+ */
+
 export const getAcademiesLogs = async () => {
   try {
     const response = await axiosMethods.get<TGetAcademiesLogsResponse>(
