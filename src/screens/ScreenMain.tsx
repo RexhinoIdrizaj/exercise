@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Box, Container, Grid, Typography } from "@mui/material";
 
-import { AcademiesList, DevicesList } from "../components";
+import { AcademiesList, DevicesList, UINoData } from "../components";
 import { getAcademiesLogs } from "../services";
 import { transformDataLogs } from "../transformers";
 import { TModifiedAcademiesData, TNullable } from "../models";
@@ -13,12 +13,21 @@ const ScreenMain = () => {
   const [chosenAcademyId, setChosenAcademyId] =
     useState<TNullable<string>>(null);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     const getData = async () => {
-      const response = await getAcademiesLogs();
-      if (!response) return;
-      const wantedData = transformDataLogs(response);
-      setAcademies(wantedData);
+      try {
+        setIsLoading(true);
+        const dataArray = await getAcademiesLogs();
+        if (!dataArray || !dataArray.length) return;
+        const wantedData = transformDataLogs(dataArray);
+        setAcademies(wantedData);
+      } catch (error) {
+        console.log("error transforming data", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
     getData();
   }, []);
@@ -46,30 +55,33 @@ const ScreenMain = () => {
   return (
     <Container>
       <Box paddingY={4}>
-        <Grid container spacing={4}>
-          <Grid item xs={12} lg={6}>
-            <Box>
-              <Typography textAlign="center" variant="h3">
-                Academies
-              </Typography>
+        <UINoData isLoading={isLoading} isEmpty={!academies} />
+        {academies && (
+          <Grid container spacing={4}>
+            <Grid item xs={12} lg={6}>
               <Box>
-                <AcademiesList
-                  selectedId={chosenAcademyId}
-                  data={academiesToShow}
-                  onItemClick={handleItemClick}
-                />
+                <Typography textAlign="center" variant="h3">
+                  Academies
+                </Typography>
+                <Box>
+                  <AcademiesList
+                    selectedId={chosenAcademyId}
+                    data={academiesToShow}
+                    onItemClick={handleItemClick}
+                  />
+                </Box>
               </Box>
-            </Box>
+            </Grid>
+            <Grid item xs={12} lg={6}>
+              <Box>
+                <Typography textAlign="center" variant="h3">
+                  Devices
+                </Typography>
+                <DevicesList data={devicesToShow} />
+              </Box>
+            </Grid>
           </Grid>
-          <Grid item xs={12} lg={6}>
-            <Box>
-              <Typography textAlign="center" variant="h3">
-                Devices
-              </Typography>
-              <DevicesList data={devicesToShow} />
-            </Box>
-          </Grid>
-        </Grid>
+        )}
       </Box>
     </Container>
   );
